@@ -741,8 +741,15 @@ class data_analysis:
         low_net_birth_rate_countries = []  # don't change
         #### FILL IN CODE #### START
         # FILL IN CODE HERE
-        high_net_birth_rate_countries = list(filter(lambda x: x < gdp_per_capita_threshold, gdppc_raw))
-        low_net_birth_rate_countries = list(filter(lambda x: x > gdp_per_capita_threshold, gdppc_raw))
+
+        # Filter net birth rate by country and gdp
+        x = list(filter(lambda a: a[0] > gdp_per_capita_threshold, zip(gdppc_raw, countries_raw)))
+        high_net_birth_rate_countries = list(map(lambda a: a[1], x))
+        high_net_birth_rate = list(map(lambda a: a[0], x))
+
+        y = list(filter(lambda a: a[0] < gdp_per_capita_threshold, zip(gdppc_raw, countries_raw)))
+        low_net_birth_rate_countries = list(map(lambda a: a[1], y))
+        low_net_birth_rate = list(map(lambda a: a[0], y))
 
         #### FILL IN CODE #### END
 
@@ -753,10 +760,10 @@ class data_analysis:
         Use functions compute_average_of_series,compute_standard_deviation_of_series
         '''
         #### FILL IN CODE #### START
-        high_net_birthrate_gdppc_average =  self.compute_average_of_series(high_net_birth_rate_countries)
-        high_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(high_net_birth_rate_countries, high_net_birthrate_gdppc_average)
-        low_net_birthrate_gdppc_average = self.compute_average_of_series(low_net_birth_rate_countries)
-        low_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(low_net_birth_rate_countries, low_net_birthrate_gdppc_average)
+        high_net_birthrate_gdppc_average =  self.compute_average_of_series(high_net_birth_rate)
+        high_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(high_net_birth_rate, high_net_birthrate_gdppc_average)
+        low_net_birthrate_gdppc_average = self.compute_average_of_series(low_net_birth_rate)
+        low_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(low_net_birth_rate, low_net_birthrate_gdppc_average)
         #### FILL IN CODE #### END
 
         # Print lists of countries, don't change
