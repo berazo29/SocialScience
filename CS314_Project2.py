@@ -393,7 +393,7 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
-        series_average =  sum(data_series)/len(data_series)
+        series_average = sum(data_series)/len(data_series)
 
         return series_average
 
@@ -415,7 +415,7 @@ class data_analysis:
 
         '''
         #### FILL IN CODE HERE ####
-        series_standard_deviation =  # fill in computation
+        series_standard_deviation = pow(sum(list(map(lambda x: pow((average_of_series - x), 2), data_series)))/len(data_series), 0.5)
 
         return series_standard_deviation
 
