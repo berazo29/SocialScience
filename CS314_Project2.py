@@ -294,8 +294,13 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
+        a = []
+        for i in list_of_series:
+            a.append(list(map(lambda x, y: abs((x - y) * (x - y)), i, average_series)))
 
-        std_list =  # fill in computation
+        average_list = list(map(lambda x: x / len(a), [sum(i) for i in zip(*a)]))
+
+        std_list = list(map(lambda x: pow(x, 0.5), average_list))
 
         return std_list
 
@@ -316,7 +321,7 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
-
+        l1 = self.compute_average_across_series()
         correlation_list =  # fill in computation
 
         return correlation_list
