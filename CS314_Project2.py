@@ -349,7 +349,7 @@ class data_analysis:
         '''
         #### FILL IN CODE HERE ####
 
-        net_correlation =  # fill in computation
+        net_correlation =  sum(self.compute_net_correlation(data_series_1, data_series_2))
 
         return net_correlation
 
