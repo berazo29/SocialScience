@@ -242,7 +242,7 @@ class data_analysis:
 
         #### FILL IN CODE HERE ####
 
-        normalized_series =  # fill in computation
+        normalized_series =  list(map(lambda x: x/sum(data_series), data_series))
 
         return normalized_series
 
