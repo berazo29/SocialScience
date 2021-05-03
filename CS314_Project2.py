@@ -799,7 +799,7 @@ class data_analysis:
         Generate a list of length 10 with equally spaced values starting from 0.01 and ending with 0.12
         '''
         #### FILL IN CODE #### START
-        t1 = list(map(lambda x: x*0.12/10, range(1, 11)))
+        t1 = list(map(lambda x: x*(0.12-0.01)/10, range(1, 11)))
         #### FILL IN CODE #### END
 
         '''
