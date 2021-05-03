@@ -349,7 +349,7 @@ class data_analysis:
         '''
         #### FILL IN CODE HERE ####
 
-        net_correlation =  sum(self.compute_net_correlation(data_series_1, data_series_2))
+        net_correlation = sum(self.compute_correlations(data_series_1, data_series_2))
 
         return net_correlation
 
@@ -465,12 +465,12 @@ class data_analysis:
             by series pop_raw
         '''
         #### FILL IN CODE #### START
-        oil_consumption_pc =  # FILL IN CODE HERE
-        electricity_consumption_pc =  # FILL IN CODE HERE
-        gas_consumption_pc =  # FILL IN CODE HERE
-        oil_production_pc =  # FILL IN CODE HERE
-        electricity_production_pc =  # FILL IN CODE HERE
-        gas_production_pc =  # FILL IN CODE HERE
+        oil_consumption_pc =  self.compute_ratio(oc_raw, pop_raw)
+        electricity_consumption_pc =  self.compute_ratio(ec_raw, pop_raw)
+        gas_consumption_pc =  self.compute_ratio(gc_raw, pop_raw)
+        oil_production_pc =  self.compute_ratio(op_raw, pop_raw)
+        electricity_production_pc =  self.compute_ratio(ep_raw, pop_raw)
+        gas_production_pc =  self.compute_ratio(gp_raw, pop_raw)
         #### FILL IN CODE #### END
 
         # Visualize per capita energy consumption and production vs gdp per capita - don't change
@@ -513,9 +513,9 @@ class data_analysis:
         Specifically normalize sereis: 1. oil_consumption_pc, electricity_consumption_pc, gas_consumption_pc 
         '''
         #### FILL IN CODE #### START
-        oil_consumption_per_capita_norm =  # FILL IN CODE HERE
-        electricity_consumption_per_capita_norm =  # FILL IN CODE HERE
-        gas_consumption_per_capita_norm =  # FILL IN CODE HERE
+        oil_consumption_per_capita_norm =  self.normalize_series(oil_consumption_pc)
+        electricity_consumption_per_capita_norm =  self.normalize_series(electricity_consumption_pc)
+        gas_consumption_per_capita_norm =  self.normalize_series(gas_consumption_pc)
         #### FILL IN CODE #### END
 
         '''
@@ -524,8 +524,8 @@ class data_analysis:
           [oil_consumption_per_capita_norm, electricity_consumption_per_capita_norm, gas_consumption_per_capita_norm] 
         '''
         #### FILL IN CODE #### START
-        energy_consumption_average =  # FILL IN CODE HERE
-        energy_consumption_std =  # FILL IN CODE HERE
+        energy_consumption_average =  self.compute_average_across_series([oil_consumption_per_capita_norm, electricity_consumption_per_capita_norm, gas_consumption_per_capita_norm])
+        energy_consumption_std =  self.compute_standard_deviation_across_series([oil_consumption_per_capita_norm, electricity_consumption_per_capita_norm, gas_consumption_per_capita_norm], energy_consumption_average )
         #### FILL IN CODE #### END
 
         # Sort series by gdp per capita - don't change
@@ -616,7 +616,7 @@ class data_analysis:
         So apply function compute_net_correlation to data series: infant_mortality_rate,fertility_rate
         '''
         #### FILL IN CODE #### START
-        net_correlation_infant_fatality_rate_and_fertility_rate =  # FILL IN CODE HERE
+        net_correlation_infant_fatality_rate_and_fertility_rate =  self.compute_net_correlation(infant_mortality_rate, fertility_rate)
         #### FILL IN CODE #### END
 
         '''
@@ -627,9 +627,9 @@ class data_analysis:
             ratio_survival_over_fatality_per_woman: net_fertility_rate/kid_fatality_per_woman
         '''
         #### FILL IN CODE #### START
-        kid_fatality_per_woman =  # FILL IN CODE HERE
-        net_fertility_rate =  # FILL IN CODE HERE
-        ratio_survival_over_fatality_per_woman =  # FILL IN CODE HERE
+        kid_fatality_per_woman =  list(map(lambda x, y: x*y / 1000, fertility_rate, infant_mortality_rate))
+        net_fertility_rate =  list(map(lambda x, y: x-y, fertility_rate, kid_fatality_per_woman))
+        ratio_survival_over_fatality_per_woman = list(map(lambda x, y: x/y, net_fertility_rate, kid_fatality_per_woman))
         #### FILL IN CODE #### END
 
         '''
@@ -637,7 +637,7 @@ class data_analysis:
         To do so apply function compute_net_correlation to ratio_survival_over_fatality_per_woman,gdppc_raw
         '''
         #### FILL IN CODE #### START
-        net_correlation_ratio_survival_over_fatality_per_woman_vs_gdppc =  # FILL IN CODE HERE
+        net_correlation_ratio_survival_over_fatality_per_woman_vs_gdppc =  self.compute_net_correlation(ratio_survival_over_fatality_per_woman, gdppc_raw)
         #### FILL IN CODE #### END
 
         # Visualization code - don't change
@@ -697,14 +697,14 @@ class data_analysis:
         Compute element wise correlation between birth_rate and death_rate by applying using compute_correlations
         '''
         #### FILL IN CODE #### START
-        correlation_series =  # FILL IN CODE HERE
+        correlation_series = self.compute_correlations(birth_rate, death_rate)
         #### FILL IN CODE #### END
 
         '''
         Compute the net birth rate by taking difference: birth_rate-death_rate
         '''
         #### FILL IN CODE #### START
-        net_birth_rate =  # FILL IN CODE HERE
+        net_birth_rate =  list(map(lambda x, y: x-y , birth_rate, death_rate))
         #### FILL IN CODE #### END
 
         # Visualization code - don't change
@@ -741,6 +741,9 @@ class data_analysis:
         low_net_birth_rate_countries = []  # don't change
         #### FILL IN CODE #### START
         # FILL IN CODE HERE
+        high_net_birth_rate_countries = list(filter(lambda x: x < gdp_per_capita_threshold, gdppc_raw))
+        low_net_birth_rate_countries = list(filter(lambda x: x > gdp_per_capita_threshold, gdppc_raw))
+
         #### FILL IN CODE #### END
 
         '''
@@ -750,10 +753,10 @@ class data_analysis:
         Use functions compute_average_of_series,compute_standard_deviation_of_series
         '''
         #### FILL IN CODE #### START
-        high_net_birthrate_gdppc_average =  # FILL IN CODE HERE
-        high_net_birthrate_gdppc_std =  # FILL IN CODE HERE
-        low_net_birthrate_gdppc_average =  # FILL IN CODE HERE
-        low_net_birthrate_gdppc_std =  # FILL IN CODE HERE
+        high_net_birthrate_gdppc_average =  self.compute_average_of_series(high_net_birth_rate_countries)
+        high_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(high_net_birth_rate_countries, high_net_birthrate_gdppc_average)
+        low_net_birthrate_gdppc_average = self.compute_average_of_series(low_net_birth_rate_countries)
+        low_net_birthrate_gdppc_std = self.compute_standard_deviation_of_series(low_net_birth_rate_countries, low_net_birthrate_gdppc_average)
         #### FILL IN CODE #### END
 
         # Print lists of countries, don't change
@@ -796,7 +799,7 @@ class data_analysis:
         Generate a list of length 10 with equally spaced values starting from 0.01 and ending with 0.12
         '''
         #### FILL IN CODE #### START
-        t1 =  # FILL IN CODE HERE
+        t1 = list(map(lambda x: x*0.12/10, range(1, 11)))
         #### FILL IN CODE #### END
 
         '''
@@ -804,7 +807,7 @@ class data_analysis:
         Generate a list of length 10 with equally spaced values starting from 30 and ending with 270
         '''
         #### FILL IN CODE #### START
-        t2 =  # FILL IN CODE HERE
+        t2 = list(map(lambda x: x*(270-30)/10, range(1, 11)))
         #### FILL IN CODE #### END
 
         # Model Fitting, don't change

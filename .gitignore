@@ -259,3 +259,4 @@ Thumbs.db
 # LOCAL
 .idea/
 test.py
+*.png
