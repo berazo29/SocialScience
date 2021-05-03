@@ -321,8 +321,13 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
-        l1 = self.compute_average_across_series()
-        correlation_list =  # fill in computation
+        l1 = sum(data_series_1) / len(data_series_1)
+        l2 = sum(data_series_2) / len(data_series_2)
+
+        sub1 = list(map(lambda x: x - l1, data_series_1))
+        sub2 = list(map(lambda x: x - l2, data_series_2))
+
+        correlation_list = list(map(lambda x, y: x * y, sub1, sub2))
 
         return correlation_list
 
