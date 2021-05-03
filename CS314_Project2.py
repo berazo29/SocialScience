@@ -268,7 +268,7 @@ class data_analysis:
         #### FILL IN CODE HERE ####
         # sum up all corresponding elements of series
 
-        average_list =  # fill in computation
+        average_list = list(map(lambda x: x / len(list_of_series), [sum(i)for i in zip(*list_of_series)]))
 
         return average_list
 
