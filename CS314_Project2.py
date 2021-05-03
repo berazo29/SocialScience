@@ -368,7 +368,12 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
-        ratio_list =  # fill in computation
+        ratio_list = []
+        try:
+            ratio_list = list(map(lambda x, y: x / y, data_series_1, data_series_2))
+        except ZeroDivisionError:
+            print("Encounter zero in data_series_2", ZeroDivisionError)
+            exit()
 
         return ratio_list
 
