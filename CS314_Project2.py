@@ -393,7 +393,7 @@ class data_analysis:
         '''
 
         #### FILL IN CODE HERE ####
-        series_average =  # fill in computation
+        series_average =  sum(data_series)/len(data_series)
 
         return series_average
 
